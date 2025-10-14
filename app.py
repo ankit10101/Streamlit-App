@@ -13,17 +13,19 @@ if "messages" not in st.session_state:
 # ----------------------------------------------------------------
 
 with st.sidebar:
-    st.write("*Conversations Start with a Question. Powered by Google Gemini.*")
+    st.write(
+        "*Analytics Made Simple — One Question at a Time. Powered by AWS Bedrock AgentCore*"
+    )
     st.caption(
-        """**  ADAM (AI-Driven Analytics Manager) is a world-class expert in Digital Analytics and MarTech Automation. 
-               It specializes in Google Tag Manager (GTM), Google Analytics 4 (GA4), and browser automation through Selenium**
-               """
+        """**  ADAM (AI-Driven Analytics Manager) — Your intelligent partner for automating the entire digital analytics lifecycle 
+               with mastery in GTM, GA4, and Selenium-powered browser automation.**
+        """
     )
     st.divider()
     # ✅ Clear Chat Button
     if st.button("🧹 Clear Chat"):
         st.session_state.messages = []
-        st.experimental_rerun()
+        st.rerun()
     st.caption(
         "<p style = 'text-align:center'>Made with ❤️</p>",
         unsafe_allow_html=True,
