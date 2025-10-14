@@ -20,13 +20,16 @@ with st.sidebar:
                """
     )
     st.divider()
+    # ✅ Clear Chat Button
+    if st.button("🧹 Clear Chat"):
+        st.session_state.messages = []
+        st.experimental_rerun()
     st.caption(
         "<p style = 'text-align:center'>Made with ❤️</p>",
         unsafe_allow_html=True,
     )
 
 st.set_page_config(initial_sidebar_state="expanded", layout="wide")
-
 
 st.title("ADAM 🤖: :red[A]I-:red[D]riven :red[A]nalytics Lifecycle :red[M]anagement")
 
