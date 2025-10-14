@@ -1,0 +1,63 @@
+import streamlit as st
+import boto3
+import json
+
+client = boto3.client("bedrock-agentcore", region_name="ap-south-1")
+
+# Streamlit chat memory
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# ----------------------------------------------------------------
+# Streamlit Chat Interface
+# ----------------------------------------------------------------
+
+with st.sidebar:
+    st.write("*Conversations Start with a Question. Powered by Google Gemini.*")
+    st.caption(
+        """**  ADAM (AI-Driven Analytics Manager) is a world-class expert in Digital Analytics and MarTech Automation. 
+               It specializes in Google Tag Manager (GTM), Google Analytics 4 (GA4), and browser automation through Selenium**
+               """
+    )
+    st.divider()
+    st.caption(
+        "<p style = 'text-align:center'>Made with ❤️</p>",
+        unsafe_allow_html=True,
+    )
+
+st.set_page_config(initial_sidebar_state="expanded", layout="wide")
+
+
+st.title("ADAM 🤖: :red[A]I-:red[D]riven :red[A]nalytics Lifecycle :red[M]anagement")
+
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Accept user input
+if user_input := st.chat_input("How may I help you?"):
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": user_input})
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(user_input)
+
+    with st.chat_message("assistant"):
+        with st.spinner("Working on it..."):
+            payload = json.dumps({"prompt": user_input})
+
+            response = client.invoke_agent_runtime(
+                agentRuntimeArn="arn:aws:bedrock-agentcore:ap-south-1:501931553097:runtime/ADAM-PLkNRwHAth",
+                runtimeSessionId="dfmeoagmreaklgmrkleafremoigrmtesogmtrskhmtkrlshmt",  # Must be 33+ chars
+                payload=payload,
+                qualifier="DEFAULT",  # Optional
+            )
+
+            response_body = response["response"].read()
+            response_data = json.loads(response_body)["result"]
+
+            st.markdown(response_data)
+        st.session_state.messages.append(
+            {"role": "assistant", "content": response_data}
+        )
