@@ -1,3 +1,21 @@
+"""
+ADAM (AI-Driven Analytics Manager) Streamlit App
+
+This Streamlit application provides a chat-based interface for automating digital analytics tasks,
+leveraging AWS Bedrock AgentCore for intelligent responses. It features session-based chat memory,
+sidebar controls, and integration with GTM, GA4, and Selenium-powered browser automation.
+
+Key Features:
+- Chat interface for user queries and assistant responses.
+- AWS Bedrock AgentCore integration for AI-powered analytics automation.
+- Sidebar with app description, clear chat button, and credits.
+- Session state management for chat history.
+- Responsive UI with loading spinners and markdown rendering.
+
+Author: [Your Name]
+Date: [Date]
+"""
+
 import streamlit as st
 import boto3
 import json
@@ -57,7 +75,7 @@ if user_input := st.chat_input("How may I help you?"):
             payload = json.dumps({"prompt": user_input})
 
             response = client.invoke_agent_runtime(
-                agentRuntimeArn="arn:aws:bedrock-agentcore:ap-south-1:501931553097:runtime/hosted_agent_mb5wa-JU4BeUCksB",
+                agentRuntimeArn="arn:aws:bedrock-agentcore:ap-south-1:501931553097:runtime/hosted_agent_xvgwz-X0sl152L4n",
                 runtimeSessionId="dfmeoagmreaklgmrkleafremoigrmtesogmtrskhmtkrlshmt",  # Must be 33+ chars
                 payload=payload,
                 qualifier="DEFAULT",  # Optional
